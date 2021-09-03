@@ -2,7 +2,7 @@ package config
 
 import (
 	"crud-api-homework/models"
-	"fmt"
+	//"fmt"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -10,7 +10,7 @@ import (
 
 var DbConn *gorm.DB
 
-func InitDB() {
+func InitDB() *gorm.DB {
 	var err error
 	dsn := "root:@tcp(127.0.0.1:3306)/hw_crud?charset=utf8mb4&parseTime=True&loc=Local"
 	DbConn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -19,7 +19,8 @@ func InitDB() {
 		panic(err.Error())
 	}
 
-	fmt.Println("Connection Opened to Database")
+	//fmt.Println("Connection Opened to Database")
 	DbConn.AutoMigrate(&models.Movies{})
-	fmt.Println("Database Migrated")
+	//fmt.Println("Database Migrated")
+	return DbConn
 }

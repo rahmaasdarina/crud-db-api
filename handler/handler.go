@@ -16,7 +16,8 @@ func HandlerNewMovies(c *fiber.Ctx) error {
 	//return c.SendString("Insert Data Movies")
 	Db := config.DbConn
 
-	movie := new(models.MoviesData)
+	movie := new(models.Movies)
+	//movie := &models.Movies{}
 	if err := c.BodyParser(movie); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": true,
@@ -36,7 +37,7 @@ func HandlerGetMovies(c *fiber.Ctx) error {
 	Db := config.DbConn
 
 	slug := c.Params("slug")
-	var movie models.MoviesData
+	var movie models.Movies
 	Db.Find(&movie, slug)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -64,7 +65,7 @@ func HandlerUpMovies(c *fiber.Ctx) error {
 	Db := config.DbConn
 
 	slug := c.Params("slug")
-	movie := new(models.MoviesData)
+	movie := new(models.Movies)
 	Db.First(&movie, slug)
 	var mysqlErr *mysql.MySQLError
 
@@ -108,7 +109,7 @@ func HandlerDeleteMovie(c *fiber.Ctx) error {
 	Db := config.DbConn
 
 	slug := c.Params("slug")
-	var movie models.MoviesData
+	var movie models.Movies
 	Db.First(&movie, slug)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
